@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -13,7 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        dd($posts);
     }
 
     /**
@@ -23,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -43,9 +47,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        dd($post);
     }
 
     /**
