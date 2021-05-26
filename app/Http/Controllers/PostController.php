@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -38,7 +39,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validazione dei dati
+        $request->validate([
+            'title' => 'required|string|max:150|unique:posts',
+            'date' => 'required|date',
+            'content' => 'required|string',
+            'image' => 'nullable|url'
+        ]);
+
+        $data = $request->all();
+
+        // verifico se la checkbox è selezionata
+        $data['published'] = isset($data['published']) ? 1 : 0;
+
+        // imposto lo slug
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        // creo variabile e salvo nel db
+        $newPost = Post::create($data);
+
+        // aggiungo i tag selezionati
+        $newPost->tags()->attach($data['tags']);
+        
+        return redirect()->route('posts.index');
     }
 
     /**

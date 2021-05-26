@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     // abilito mass assignment
-    protected $guarded = [];
+    protected $guarded = ['tags'];
 
     // definisco relazione one to many con tabella comments
     public function comments() {
