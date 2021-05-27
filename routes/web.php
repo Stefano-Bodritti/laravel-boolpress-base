@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'BlogController@index')->name('guest.index');
+Route::get('guest/{slug}', 'BlogController@show')->name('guest.show');
 
 Route::resource('posts', 'PostController');
