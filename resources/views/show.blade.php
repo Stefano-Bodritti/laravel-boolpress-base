@@ -47,6 +47,9 @@
 
         <div class="mt-3 mb-3">
           <h1>{{$post->title}}</h1>
+            @foreach ($post->tags as $tag)
+              <span class="badge badge-primary">{{$tag->name}}</span>
+            @endforeach
           <h4>{{$post->date}}</h4>
           <p>{{$post->content}}</p>
 
@@ -64,8 +67,34 @@
             @else 
             <p>Nessun commento</p>
             @endif
-
+            
           </div>
+
+          <h3>Aggiungi Commento</h3>
+          @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+          @endif
+          <form action="{{route('guest.add-comment', ['post' => $post->id])}}" method="post">
+            @csrf
+            @method('POST')
+            <div class="form-group">
+              <label for="title">Nome</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Nome">
+            </div>
+            <div class="form-group">
+              <label for="content">Commento</label>
+              <textarea class="form-control"  name="content" id="content" cols="30" rows="4" placeholder="Commento"></textarea>
+            </div>
+            <div class="mt-3">
+              <button type="submit" class="btn btn-primary">Inserisci commento</button>
+            </div>
+          </form>
         </div>
 
       </div>

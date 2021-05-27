@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'BlogController@index')->name('guest.index');
 Route::get('guest/{slug}', 'BlogController@show')->name('guest.show');
+
+Route::post('guest/{post}/add-comment', 'BlogController@addComment')->name('guest.add-comment');
 
 Route::resource('posts', 'PostController');
