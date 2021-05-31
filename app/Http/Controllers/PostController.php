@@ -67,7 +67,7 @@ class PostController extends Controller
         // aggiungo i tag selezionati
         $newPost->tags()->attach($data['tags']);
         
-        return redirect()->route('posts.index');
+        return redirect()->route('/');
     }
 
     /**

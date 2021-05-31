@@ -51,6 +51,13 @@
               <span class="badge badge-primary">{{$tag->name}}</span>
             @endforeach
           <h4>{{$post->date}}</h4>
+          @if ( $post->image != null )
+            @if (str_contains($post->image, 'http'))
+              <img src="{{ $post->image }}" alt="Immagine" style="height: 200px">
+            @else
+              <img src="{{ asset('storage/' . $post->image) }}" alt="Immagine" style="height: 200px">
+            @endif
+          @endif
           <p>{{$post->content}}</p>
 
           <div class="mt-5">
