@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -44,7 +45,7 @@ class PostController extends Controller
             'title' => 'required|string|max:150|unique:posts',
             'date' => 'required|date',
             'content' => 'required|string',
-            'image' => 'nullable|url'
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048'
         ]);
 
         $data = $request->all();
@@ -54,6 +55,11 @@ class PostController extends Controller
 
         // imposto lo slug
         $data['slug'] = Str::slug($data['title'], '-');
+
+        // upload immagine
+        if ( isset($data['image']) ) {
+            $data['image'] = Storage::disk('public')->put('images', $data['image']);
+        }
 
         // creo variabile e salvo nel db
         $newPost = Post::create($data);
