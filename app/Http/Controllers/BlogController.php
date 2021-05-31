@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use App\Mail\CommentMail;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -37,6 +39,9 @@ class BlogController extends Controller
         $newComment->content = $request->content;
         $newComment->post_id = $post->id;
         $newComment->save();
+
+        // invio mail
+        Mail::to('prova@mail.it')->send(new CommentMail());
 
         return back();
     }
